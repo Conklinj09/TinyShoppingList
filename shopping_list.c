@@ -163,3 +163,25 @@ void searchItem() {
     }
     printf("Item not found.\n");
 }
+void saveToFile() {
+    FILE *file = fopen("shopping_list.txt", "w");
+    if (file == NULL) {
+        printf("Error saving file.\n");
+        return;
+    }
+    for (int i = 0; i < itemCount; i++) {
+        fprintf(file, "%s %d %s\n", shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
+    }
+    fclose(file);
+}
+
+void loadFromFile() {
+    FILE *file = fopen("shopping_list.txt", "r");
+    if (file == NULL) {
+        return; // No file yet
+    }
+    while (fscanf(file, "%49s %d %29s", shoppingList[itemCount].name, &shoppingList[itemCount].quantity, shoppingList[itemCount].category) != EOF) {
+        itemCount++;
+    }
+    fclose(file);
+}
