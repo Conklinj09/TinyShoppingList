@@ -1,2 +1,15 @@
-apple 5 
-Apple 5 Fruits
+5 0 Banana
+4 0 
+Fruits 0 
+Fruits 0 Grapes
+22 0 
+Fruits 0 
+apple 5 Apple
+Strawberries 7 Fruits
+Fig 8 Fruits
+Pear 8 Fruits
+Orange 9 Fruits
+Cherry 10 Fruits
+Cranberries 34 Fruits
+Lychee 100 Fruits
+Gooseberry 111 Fruits
