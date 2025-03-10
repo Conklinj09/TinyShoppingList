@@ -3,11 +3,13 @@
 #include <string.h>
 
 #define MAX_ITEMS 100
+#define MAX_CATEGORY 30
 
 // Structure to store shopping list items
 typedef struct {
     char name[50];
     int quantity;
+    char category[MAX_CATEGORY];
 } Item;
 
 Item shoppingList[MAX_ITEMS];
@@ -68,6 +70,10 @@ void addItem() {
     scanf("%d", &shoppingList[itemCount].quantity);
     getchar(); // Clear buffer
     
+    printf("Enter category: ");
+    fgets(shoppingList[itemCount].category, MAX_CATEGORY, stdin);
+    strtok(shoppingList[itemCount].category, "\n"); // Remove newline
+    
     itemCount++;
     printf("Item added successfully!\n");
 }
@@ -98,7 +104,7 @@ void displayList() {
     }
     printf("\nYour Shopping List:\n");
     for (int i = 0; i < itemCount; i++) {
-        printf("%d. %s - %d\n", i + 1, shoppingList[i].name, shoppingList[i].quantity);
+        printf("%d. %s - %d [%s]\n", i + 1, shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
     }
 }
 
@@ -109,7 +115,7 @@ void saveToFile() {
         return;
     }
     for (int i = 0; i < itemCount; i++) {
-        fprintf(file, "%s %d\n", shoppingList[i].name, shoppingList[i].quantity);
+        fprintf(file, "%s %d %s\n", shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
     }
     fclose(file);
 }
@@ -119,7 +125,7 @@ void loadFromFile() {
     if (file == NULL) {
         return; // No file yet
     }
-    while (fscanf(file, "%49s %d", shoppingList[itemCount].name, &shoppingList[itemCount].quantity) != EOF) {
+    while (fscanf(file, "%49s %d %29s", shoppingList[itemCount].name, &shoppingList[itemCount].quantity, shoppingList[itemCount].category) != EOF) {
         itemCount++;
     }
     fclose(file);
