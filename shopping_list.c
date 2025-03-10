@@ -21,7 +21,7 @@ void removeItem();
 void displayList();
 void saveToFile();
 void loadFromFile();
-void clearList();
+void sortAlphabetically();
 
 int main() {
     int choice;
@@ -32,7 +32,8 @@ int main() {
         printf("1. Add an item\n");
         printf("2. Remove an item\n");
         printf("3. View list\n");
-        printf("4. Save & Exit\n");
+        printf("4. Sort list alphabetically\n");
+        printf("5. Save & Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         getchar(); // Clear buffer
@@ -48,6 +49,10 @@ int main() {
                 displayList();
                 break;
             case 4:
+                sortAlphabetically();
+                printf("List sorted alphabetically!\n");
+                break;
+            case 5:
                 saveToFile();
                 printf("Shopping list saved. Exiting...\n");
                 return 0;
@@ -105,6 +110,18 @@ void displayList() {
     printf("\nYour Shopping List:\n");
     for (int i = 0; i < itemCount; i++) {
         printf("%d. %s - %d [%s]\n", i + 1, shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
+    }
+}
+
+void sortAlphabetically() {
+    for (int i = 0; i < itemCount - 1; i++) {
+        for (int j = 0; j < itemCount - i - 1; j++) {
+            if (strcmp(shoppingList[j].name, shoppingList[j + 1].name) > 0) {
+                Item temp = shoppingList[j];
+                shoppingList[j] = shoppingList[j + 1];
+                shoppingList[j + 1] = temp;
+            }
+        }
     }
 }
 
