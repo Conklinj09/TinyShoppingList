@@ -23,6 +23,7 @@ void saveToFile();
 void loadFromFile();
 void sortAlphabetically();
 void sortByQuantity();
+void searchItem();
 
 int main() {
     int choice;
@@ -35,7 +36,8 @@ int main() {
         printf("3. View list\n");
         printf("4. Sort list alphabetically\n");
         printf("5. Sort list by quantity\n");
-        printf("6. Save & Exit\n");
+        printf("6. Search for an item\n");
+        printf("7. Save & Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         getchar(); // Clear buffer
@@ -59,6 +61,9 @@ int main() {
                 printf("List sorted by quantity!\n");
                 break;
             case 6:
+                searchItem();
+                break;
+            case 7:
                 saveToFile();
                 printf("Shopping list saved. Exiting...\n");
                 return 0;
@@ -143,25 +148,18 @@ void sortByQuantity() {
     }
 }
 
-void saveToFile() {
-    FILE *file = fopen("shopping_list.txt", "w");
-    if (file == NULL) {
-        printf("Error saving file.\n");
-        return;
-    }
-    for (int i = 0; i < itemCount; i++) {
-        fprintf(file, "%s %d %s\n", shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
-    }
-    fclose(file);
-}
+void searchItem() {
+    char name[50];
+    printf("Enter the item name to search: ");
+    fgets(name, 50, stdin);
+    strtok(name, "\n"); // Remove newline
 
-void loadFromFile() {
-    FILE *file = fopen("shopping_list.txt", "r");
-    if (file == NULL) {
-        return; // No file yet
+    for (int i = 0; i < itemCount; i++) {
+        if (strcmp(shoppingList[i].name, name) == 0) {
+            printf("\nItem Found!\n");
+            printf("%s - %d [%s]\n", shoppingList[i].name, shoppingList[i].quantity, shoppingList[i].category);
+            return;
+        }
     }
-    while (fscanf(file, "%49s %d %29s", shoppingList[itemCount].name, &shoppingList[itemCount].quantity, shoppingList[itemCount].category) != EOF) {
-        itemCount++;
-    }
-    fclose(file);
+    printf("Item not found.\n");
 }
